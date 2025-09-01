@@ -3,125 +3,222 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Госпожа Алатея — перформанс, стиль, дисциплина (18+)</title>
-  <meta name="description" content="Госпожа Алатея — арт-персона, перформанс и стиль. Про зрелые отношения, границы, власть и красоту. 18+.">
-  <meta name="theme-color" content="#0b0b0f">
+  <title>Госпожа Алатея — неоновая латекс-эстетика (18+)</title>
+  <meta name="description" content="Госпожа Алатея — арт-персона, перформанс и стиль. Неоновая латекс-эстетика, границы и дисциплина. 18+." />
+  <meta name="theme-color" content="#0a0b12" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <meta property="og:title" content="Госпожа Алатея — перформанс, стиль, дисциплина (18+)" />
+  <meta property="og:title" content="Госпожа Алатея — неоновая латекс-эстетика (18+)" />
   <meta property="og:description" content="Арт-персона и перформанс о силе воли, границах и красоте. 18+." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://images.unsplash.com/photo-1543083115-638c32cd2230?q=80&w=1600&auto=format&fit=crop" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1520970014086-2208d157c9e2?q=80&w=1600&auto=format&fit=crop" />
   <meta property="og:locale" content="ru_RU" />
   <style>
+    /* ===== CSS VARIABLES (tune intensities here) ===== */
     :root{
-      --bg:#0b0b0f;
-      --bg-2:#0f0f15;
-      --card:#12121a99;
-      --text:#e9e9ee;
-      --muted:#b8b8c7;
-      --accent:#ff2a6d;
-      --accent-2:#b300ff;
+      --bg:#0a0b12;            /* page background */
+      --bg-2:#0e0f18;          /* card background dark */
+      --text:#f1f1ff;          /* main text */
+      --muted:#bdbdd4;         /* muted text */
+      --accent:#ff2a6d;        /* neon magenta */
+      --accent-2:#b300ff;      /* neon purple */
+      --accent-3:#00e5ff;      /* neon cyan */
       --ok:#33d17a;
-      --warn:#f5d90a;
-      --err:#f66;
       --radius:18px;
-      --shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.03);
-      --blur:10px;
+      --blur:14px;
+      --glow:0 0 20px rgba(255,42,109,.45), 0 0 40px rgba(179,0,255,.35), inset 0 0 1px rgba(255,255,255,.2);
+      --cardGrad: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       --max:1200px;
+      --intensity:1;   /* global multiplier for effects (1..1.3) */
     }
+
+    /* ===== RESET ===== */
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:radial-gradient(1200px 800px at 70% -10%, rgba(179,0,255,.20), transparent 60%), radial-gradient(900px 600px at -10% 20%, rgba(255,42,109,.18), transparent 65%), var(--bg); color:var(--text); font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans",sans-serif; line-height:1.6}
+    html,body{margin:0;padding:0}
+    img{max-width:100%;display:block;border-radius:14px}
     a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block;border-radius:12px}
+    body{
+      font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+      color:var(--text);
+      line-height:1.65;
+      background: var(--bg);
+      overflow-x:hidden;
+    }
     .container{max-width:var(--max);margin:0 auto;padding:0 20px}
-    .btn{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.2rem;border-radius:14px;border:1px solid #ffffff26;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));box-shadow:var(--shadow);backdrop-filter:blur(var(--blur));transition:.18s}
-    .btn:hover{transform:translateY(-1px);border-color:#ffffff44}
-    .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));border:none;color:white}
-    .btn.ghost{background:transparent;border:1px solid #ffffff26}
-    .badge{display:inline-flex;gap:.5rem;align-items:center;font-size:.8rem;color:#fff;background:linear-gradient(135deg,#ff2a6dc7,#b300ffc7);padding:.35rem .7rem;border-radius:999px;border:1px solid #ffffff22}
-    header.site{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(11,11,15,.8),rgba(11,11,15,.55));backdrop-filter:blur(12px);border-bottom:1px solid #ffffff12}
+
+    /* ===== BACKGROUND LAYERS ===== */
+    /* neon radial gradients */
+    .bg-neon{
+      position:fixed;inset:-10% -10% auto -10%;height:120vh;z-index:-3;
+      background:
+        radial-gradient(1200px 800px at 75% -10%, rgba(179,0,255,.25), transparent 60%),
+        radial-gradient(900px 600px at -10% 20%, rgba(255,42,109,.22), transparent 65%),
+        radial-gradient(800px 600px at 30% 120%, rgba(0,229,255,.18), transparent 60%),
+        var(--bg);
+      filter:saturate(calc(1 * var(--intensity)));
+      animation:bgFloat 16s ease-in-out infinite alternate;
+    }
+    @keyframes bgFloat{from{transform:translateY(-2%)}to{transform:translateY(2%)}}
+
+    /* subtle grid */
+    .bg-grid{position:fixed;inset:0;z-index:-2;pointer-events:none;
+      background:
+        repeating-linear-gradient( to right, rgba(255,255,255,.04) 0 1px, transparent 1px 60px),
+        repeating-linear-gradient( to bottom, rgba(255,255,255,.04) 0 1px, transparent 1px 60px);
+      mask-image: radial-gradient(1000px 600px at 50% 30%, #000, transparent 70%);
+    }
+
+    /* star sparkle */
+    .bg-stars{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.35}
+    .bg-stars:before,.bg-stars:after{
+      content:"";position:absolute;inset:-50%;background:radial-gradient(circle at 20% 30%, rgba(255,255,255,.35) 0 1px, transparent 2px),
+      radial-gradient(circle at 80% 60%, rgba(255,255,255,.3) 0 1px, transparent 2px),
+      radial-gradient(circle at 40% 80%, rgba(255,255,255,.25) 0 1px, transparent 2px),
+      radial-gradient(circle at 60% 40%, rgba(255,255,255,.25) 0 1px, transparent 2px);
+      animation: drift 120s linear infinite;
+    }
+    .bg-stars:after{animation-duration:160s;opacity:.5}
+    @keyframes drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(10%,10%,0)}}
+
+    /* noise film */
+    .bg-noise{position:fixed;inset:-20%;z-index:-1;pointer-events:none;opacity:.06;mix-blend-mode:soft-light;filter:contrast(120%)}
+    .bg-noise:before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat;opacity:.4}
+
+    /* ===== TYPO & BASICS ===== */
+    .btn{display:inline-flex;align-items:center;gap:.6rem;padding:1rem 1.2rem;border-radius:16px;border:1px solid #ffffff26;background:var(--cardGrad);backdrop-filter:blur(var(--blur));
+      box-shadow:var(--glow);
+      transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
+      position:relative;overflow:hidden}
+    .btn.primary{border:none;background:linear-gradient(135deg,var(--accent),var(--accent-2) 60%, var(--accent-3));color:#fff}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 0 18px rgba(255,42,109,.6),0 0 34px rgba(179,0,255,.45)}
+    .btn:before{content:"";position:absolute;inset:-200% -50% auto -50%;height:400%;
+      background:linear-gradient( 75deg, transparent 0 47%, rgba(255,255,255,.7) 50%, transparent 53%);
+      transform:translateX(-60%);
+      animation:sheen 3.2s ease-in-out infinite;
+      opacity:.35;mix-blend-mode:screen}
+    @keyframes sheen{to{transform:translateX(60%)}}
+
+    .badge{display:inline-flex;gap:.5rem;align-items:center;font-size:.8rem;color:#fff;background:linear-gradient(135deg,#ff2a6dc7,#b300ffc7);padding:.35rem .7rem;border-radius:999px;border:1px solid #ffffff22;box-shadow:0 0 14px rgba(179,0,255,.5)}
+
+    header.site{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(10,11,18,.8),rgba(10,11,18,.55));backdrop-filter:blur(12px);border-bottom:1px solid #ffffff12}
     .nav{display:flex;align-items:center;justify-content:space-between;padding:.7rem 0}
     .brand{display:flex;align-items:center;gap:.8rem;font-weight:800;letter-spacing:.06em}
-    .brand .logo{width:34px;height:34px;border-radius:10px;background:conic-gradient(from 220deg at 50% 50%, var(--accent), var(--accent-2), var(--accent));box-shadow:0 0 24px rgba(255,42,109,.45)}
-    .nav a{opacity:.86}
+    .brand .logo{width:34px;height:34px;border-radius:10px;background:conic-gradient(from 220deg at 50% 50%, var(--accent), var(--accent-2), var(--accent), var(--accent-3));box-shadow:0 0 24px rgba(255,42,109,.55)}
+    .nav a{opacity:.9}
     .nav .links{display:flex;gap:1.2rem}
     .mobile{display:none}
+
     main{isolation:isolate}
-    .hero{position:relative;padding:6rem 0 4rem;overflow:hidden}
-    .hero h1{font-size:clamp(2.2rem,4vw,4rem);line-height:1.1;margin:.6rem 0}
+    .hero{position:relative;padding:7rem 0 4rem;overflow:hidden}
+    .hero h1{font-size:clamp(2.4rem,4.6vw,4.4rem);line-height:1.06;margin:.6rem 0;letter-spacing:.01em}
     .hero p.lead{font-size:clamp(1rem,1.4vw,1.25rem);color:var(--muted);max-width:820px}
     .hero .cta{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.4rem}
+
+    .neonTitle{position:relative;text-shadow:0 0 14px rgba(255,42,109,.6),0 0 28px rgba(179,0,255,.5), 0 0 40px rgba(0,229,255,.4)}
+    .neonTitle .tube{position:absolute;inset:auto 0 -8px 0;height:2px;background:linear-gradient(90deg, transparent, var(--accent), var(--accent-2), var(--accent-3), transparent);filter:blur(1px);opacity:.9}
+    .neonTitle.flicker{animation:flicker 5.5s infinite}
+    @keyframes flicker{ 0%,19%,21%,23%,100%{opacity:1} 20%,22%{opacity:.6} }
+
     .grid{display:grid;gap:1.2rem}
     .two{grid-template-columns:repeat(2,minmax(0,1fr))}
     .three{grid-template-columns:repeat(3,minmax(0,1fr))}
     @media (max-width:900px){.two,.three{grid-template-columns:1fr}.mobile{display:inline-flex}.nav .links{display:none}}
-    section{padding:4rem 0;border-top:1px solid #ffffff10}
+
+    section{padding:4rem 0;border-top:1px solid #ffffff12}
     h2{font-size:clamp(1.6rem,2.4vw,2.4rem);margin:0 0 1rem}
     .sub{color:var(--muted);margin-top:.2rem}
-    .card{border:1px solid #ffffff1a;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));backdrop-filter:blur(var(--blur));border-radius:var(--radius);box-shadow:var(--shadow);padding:1.2rem}
-    .icon{width:22px;height:22px;opacity:.9}
-    .pill{font-size:.8rem;color:var(--muted)}
-    .gallery img{aspect-ratio:4/5;object-fit:cover}
+
+    .card{position:relative;border:1px solid #ffffff24;background:var(--cardGrad);backdrop-filter:blur(var(--blur));border-radius:var(--radius);box-shadow:var(--glow);padding:1.2rem;transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;overflow:hidden}
+    .card:before{ /* latex sheen */
+      content:"";position:absolute;inset:-120% -50% auto -50%;height:300%;
+      background:linear-gradient( 77deg, transparent 0 47%, rgba(255,255,255,.22) 50%, transparent 53%);
+      transform:translateX(-60%);
+      animation:sheen 5s ease-in-out infinite;
+      opacity:.25;mix-blend-mode:screen;pointer-events:none
+    }
+    .card:hover{transform:translateY(-4px);box-shadow:0 0 24px rgba(255,42,109,.6),0 0 40px rgba(179,0,255,.45);border-color:#ffffff3a}
+
+    /* gallery images get neon frame + sheen */
+    .gallery img{aspect-ratio:4/5;object-fit:cover;position:relative;box-shadow:0 0 0 1px #ffffff24, 0 0 22px rgba(179,0,255,.35);transition:transform .25s ease, box-shadow .25s ease}
+    .gallery img:hover{transform:translateY(-4px);box-shadow:0 0 0 1px #ffffff3a, 0 0 28px rgba(255,42,109,.55)}
+    .gallery .wrap{position:relative}
+    .gallery .wrap:after{content:"";position:absolute;inset:-120% -50% auto -50%;height:300%;background:linear-gradient(77deg, transparent 0 47%, rgba(255,255,255,.3) 50%, transparent 53%);transform:translateX(-60%);animation:sheen 4.2s ease-in-out infinite;opacity:.18;mix-blend-mode:screen;pointer-events:none}
+
     .quote{font-size:1rem}
-    .kicker{letter-spacing:.2em;font-weight:700;text-transform:uppercase;opacity:.8}
+    .kicker{letter-spacing:.2em;font-weight:700;text-transform:uppercase;opacity:.85}
     .list{display:grid;gap:.6rem}
     .list li{display:flex;gap:.6rem;align-items:flex-start}
-    .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));margin-top:.4rem;flex:0 0 auto}
+    .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 0 10px rgba(179,0,255,.6);margin-top:.4rem;flex:0 0 auto}
+    .pill{font-size:.8rem;color:var(--muted)}
+
     .foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:2rem 0;color:var(--muted)}
     .social{display:flex;gap:.6rem}
-    .social a{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:12px;border:1px solid #ffffff26;background:transparent}
-    /* Age gate */
-    .age-gate{position:fixed;inset:0;background:radial-gradient(1200px 800px at 20% 10%, rgba(179,0,255,.25), transparent 50%), linear-gradient(180deg,rgba(11,11,15,.95),rgba(11,11,15,.98));backdrop-filter:blur(8px);z-index:999;display:none}
-    .age-gate .box{max-width:720px;margin:10vh auto;padding:2rem}
+    .social a{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:12px;border:1px solid #ffffff26;background:transparent;box-shadow:0 0 10px rgba(255,42,109,.35)}
+
+    /* AGE GATE */
+    .age-gate{position:fixed;inset:0;background:radial-gradient(1200px 800px at 20% 10%, rgba(179,0,255,.25), transparent 50%), linear-gradient(180deg,rgba(10,11,18,.96),rgba(10,11,18,.98));backdrop-filter:blur(10px);z-index:999;display:none}
+    .age-gate .box{max-width:760px;margin:10vh auto;padding:2rem}
     .age-gate .box h3{margin:.2rem 0 1rem}
     .notice{font-size:.9rem;color:var(--muted)}
-    /* Nice separators */
+
     .sep{height:1px;background:linear-gradient(90deg,transparent,#ffffff18,transparent);margin:2rem 0}
-    /* Small helper */
     .nowrap{white-space:nowrap}
+
+    /* Cursor blob (neon) */
+    .blob{position:fixed;inset:auto auto 0 0;transform:translate(-50%,-50%);width:34vmin;height:34vmin;border-radius:50%;pointer-events:none;z-index:0;filter:blur(40px) saturate(140%);opacity:.55;mix-blend-mode:screen;background:radial-gradient(circle at 40% 40%, rgba(255,42,109,.35), transparent 60%), radial-gradient(circle at 65% 65%, rgba(179,0,255,.35), transparent 60%), radial-gradient(circle at 55% 30%, rgba(0,229,255,.35), transparent 60%)}
+
+    /* Scroll reveal */
+    .reveal{opacity:0;transform:translateY(12px);transition:opacity .6s ease, transform .6s ease}
+    .reveal.show{opacity:1;transform:none}
+
+    /* Prefer reduced motion: disable effects */
+    @media (prefers-reduced-motion: reduce){
+      .bg-neon,.bg-stars:before,.bg-stars:after,.card:before,.gallery .wrap:after,.btn:before{animation:none}
+      .blob{display:none}
+      .reveal{transition:none}
+    }
+
+    /* Link hover neon underline */
+    .neon-link{position:relative}
+    .neon-link:after{content:"";position:absolute;left:0;right:60%;bottom:-2px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--accent-3));transition:right .25s ease;filter:drop-shadow(0 0 6px rgba(179,0,255,.8))}
+    .neon-link:hover:after{right:0}
   </style>
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Person",
-    "name":"Госпожа Алатея",
-    "alternateName":"Mistress Alateya",
-    "description":"Арт-персона, перформанс. Темы: власть, границы, красота, дисциплина. 18+",
-    "image":"https://images.unsplash.com/photo-1543083115-638c32cd2230?q=80&w=1600&auto=format&fit=crop",
-    "knowsAbout":["границы","дисциплина","перформанс","контент 18+ (без откровенности)","коммуникация и согласие"],
-    "sameAs":["https://t.me/your_channel_here","https://instagram.com/your_profile_here","https://vk.com/your_profile_here"]
-  }
-  </script>
 </head>
 <body>
+  <!-- Background layers -->
+  <div class="bg-neon"></div>
+  <div class="bg-grid"></div>
+  <div class="bg-stars"></div>
+  <div class="bg-noise"></div>
+  <div class="blob" id="blob" aria-hidden="true"></div>
+
   <!-- AGE GATE -->
   <div id="ageGate" class="age-gate" role="dialog" aria-modal="true" aria-labelledby="ageTitle">
-    <div class="box card container">
+    <div class="box card container reveal">
       <span class="badge">18+ сайт для взрослых</span>
-      <h3 id="ageTitle" style="font-size:1.6rem;">Подтвердите возраст</h3>
+      <h3 id="ageTitle" style="font-size:1.6rem;" class="neonTitle">Подтвердите возраст<div class="tube" aria-hidden="true"></div></h3>
       <p class="notice">Сайт содержит материалы и темы, предназначенные для совершеннолетних. Никаких интим-услуг. Акцент — перформанс, арт и обучение коммуникации/границам.</p>
       <div class="sep"></div>
       <div style="display:flex;gap:.8rem;flex-wrap:wrap">
         <button class="btn primary" id="enterBtn">Мне 18 лет</button>
-        <a class="btn ghost" href="https://www.google.com" rel="nofollow">Мне нет 18</a>
+        <a class="btn" href="https://www.google.com" rel="nofollow">Мне нет 18</a>
       </div>
     </div>
   </div>
 
   <!-- HEADER -->
-  <header class="site">
+  <header class="site reveal">
     <div class="container nav">
       <a href="#" class="brand" aria-label="На главную">
         <span class="logo" aria-hidden="true"></span>
         <span>ALATEYA</span>
       </a>
       <nav class="links" aria-label="Основное меню">
-        <a href="#about">О проекте</a>
-        <a href="#manifest">Манифест</a>
-        <a href="#services">Услуги</a>
-        <a href="#gallery">Галерея</a>
-        <a href="#faq">FAQ</a>
+        <a class="neon-link" href="#about">О проекте</a>
+        <a class="neon-link" href="#manifest">Манифест</a>
+        <a class="neon-link" href="#services">Услуги</a>
+        <a class="neon-link" href="#gallery">Галерея</a>
+        <a class="neon-link" href="#faq">FAQ</a>
         <a href="#contact" class="btn">Контакты</a>
       </nav>
       <button class="btn mobile" id="openNav" aria-label="Меню">Меню</button>
@@ -131,13 +228,13 @@
   <!-- HERO -->
   <main>
     <section class="hero">
-      <div class="container">
-        <span class="badge"><svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 2v5M12 17v5M2 12h5M17 12h5M5 5l3.5 3.5M15.5 15.5L19 19M5 19l3.5-3.5M15.5 8.5L19 5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg> Перформанс • Стиль • Дисциплина</span>
-        <h1>Госпожа Алатея</h1>
-        <p class="lead">Арт-персона о силе, границах и красоте контроля. Здесь — эстетика, перформанс и взрослая коммуникация. Без откровенных материалов и без интим-услуг.</p>
+      <div class="container reveal">
+        <span class="badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v5M12 17v5M2 12h5M17 12h5M5 5l3.5 3.5M15.5 15.5L19 19M5 19l3.5-3.5M15.5 8.5L19 5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg> Перформанс • Стиль • Дисциплина</span>
+        <h1 class="neonTitle flicker">Госпожа Алатея<div class="tube" aria-hidden="true"></div></h1>
+        <p class="lead">Арт-персона о силе, границах и красоте контроля. Неоновая латекс-эстетика без откровенных материалов и без интим-услуг.</p>
         <div class="cta">
           <a href="#contact" class="btn primary">Запросить приватную встречу 18+</a>
-          <a href="#services" class="btn ghost">Услуги и форматы</a>
+          <a href="#services" class="btn">Услуги и форматы</a>
         </div>
       </div>
     </section>
@@ -145,9 +242,9 @@
     <!-- ABOUT -->
     <section id="about">
       <div class="container grid two">
-        <div class="card">
-          <h2>О проекте</h2>
-          <p>Алатея — сценический образ. Съёмки, перформансы и частные форматы проводятся с безусловным уважением к границам, в рамках договора и этики «согласие-безопасность-доверие».</p>
+        <div class="card reveal">
+          <h2 class="neonTitle">О проекте<div class="tube" aria-hidden="true"></div></h2>
+          <p>Алатея — сценический образ. Съёмки, перформансы и частные форматы проводятся с безусловным уважением к границам, в рамках этики «согласие—безопасность—доверие».</p>
           <ul class="list" role="list">
             <li><span class="dot"></span><span>Фокус — эстетика власти, сцены и стиля.</span></li>
             <li><span class="dot"></span><span>Личные форматы доступны только совершеннолетним и по предварительному согласованию.</span></li>
@@ -155,100 +252,65 @@
           </ul>
           <div style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap">
             <a class="btn" href="#manifest">Манифест</a>
-            <a class="btn ghost" href="#gallery">Галерея</a>
+            <a class="btn" href="#gallery">Галерея</a>
           </div>
         </div>
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=1600&auto=format&fit=crop" alt="Эстетическая фотография с неоновыми акцентами">
+        <div class="card reveal">
+          <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?q=80&w=1600&auto=format&fit=crop" alt="Эстетическая фотография с неон-глянцем"/>
         </div>
       </div>
     </section>
 
     <!-- MANIFEST -->
     <section id="manifest">
-      <div class="container">
-        <h2>Манифест</h2>
+      <div class="container reveal">
+        <h2 class="neonTitle">Манифест<div class="tube" aria-hidden="true"></div></h2>
         <p class="sub">Три столпа взаимодействия: согласие, безопасность, доверие.</p>
         <div class="grid three" style="margin-top:1rem">
-          <div class="card">
-            <h3>1. Согласие</h3>
-            <p>Только добровольные и чётко оговоренные форматы. Любой шаг — после явного «да».</p>
-          </div>
-          <div class="card">
-            <h3>2. Безопасность</h3>
-            <p>Сейф-слова, рамки, пост-контакт. Физическая и психологическая безопасность — обязательна.</p>
-          </div>
-          <div class="card">
-            <h3>3. Доверие</h3>
-            <p>Конфиденциальность и уважение. Эстетика — не повод нарушать личные границы.</p>
-          </div>
+          <div class="card"><h3>1. Согласие</h3><p>Только добровольные и чётко оговоренные форматы. Любой шаг — после явного «да».</p></div>
+          <div class="card"><h3>2. Безопасность</h3><p>Сейф-слова, рамки, пост-контакт. Физическая и психологическая безопасность — обязательна.</p></div>
+          <div class="card"><h3>3. Доверие</h3><p>Конфиденциальность и уважение. Эстетика — не повод нарушать личные границы.</p></div>
         </div>
       </div>
     </section>
 
     <!-- SERVICES -->
     <section id="services">
-      <div class="container">
-        <h2>Услуги и форматы</h2>
+      <div class="container reveal">
+        <h2 class="neonTitle">Услуги и форматы<div class="tube" aria-hidden="true"></div></h2>
         <p class="sub">Все форматы 18+, без интим-услуг. Работаем по договорённости и брифу.</p>
         <div class="grid three" style="margin-top:1rem">
-          <div class="card">
-            <h3>Перформанс/Сцена</h3>
-            <p>Постановочные номера, арт-выступления, участие в тематических мероприятиях.</p>
-            <span class="pill">по запросу</span>
-          </div>
-          <div class="card">
-            <h3>Съёмки/Контент</h3>
-            <p>Эстетические фотосессии и видео (без откровенности). Команды и студии — ОК.</p>
-            <span class="pill">бриф + Moodboard</span>
-          </div>
-          <div class="card">
-            <h3>Приватные встречи 18+</h3>
-            <p>Личные форматы для взрослых с акцентом на дисциплину и контроль. Без интим-услуг.</p>
-            <span class="pill">по согласованию</span>
-          </div>
-          <div class="card">
-            <h3>Обучение/Мастер-классы</h3>
-            <p>Коммуникация, согласие, границы, переговоры; этика взаимодействия и пост-контакт.</p>
-            <span class="pill">группы/индивидуально</span>
-          </div>
-          <div class="card">
-            <h3>Стикеры & мерч</h3>
-            <p>Фирменные стикеры «Госпожа Алатея», арт-постеры и аксессуары.</p>
-            <span class="pill">скоро</span>
-          </div>
-          <div class="card">
-            <h3>Коллаборации</h3>
-            <p>Бренд-съёмки, fashion-сцены, интеграции с артистами и площадками.</p>
-            <span class="pill">отбор</span>
-          </div>
+          <div class="card tilt"><h3>Перформанс/Сцена</h3><p>Постановочные номера, арт-выступления, участие в тематических мероприятиях.</p><span class="pill">по запросу</span></div>
+          <div class="card tilt"><h3>Съёмки/Контент</h3><p>Эстетические фотосессии и видео (без откровенности). Команды и студии — ОК.</p><span class="pill">бриф + Moodboard</span></div>
+          <div class="card tilt"><h3>Приватные встречи 18+</h3><p>Личные форматы для взрослых с акцентом на дисциплину и контроль. Без интим-услуг.</p><span class="pill">по согласованию</span></div>
+          <div class="card tilt"><h3>Обучение/Мастер-классы</h3><p>Коммуникация, согласие, границы, переговоры; этика взаимодействия и пост-контакт.</p><span class="pill">группы/индивидуально</span></div>
+          <div class="card tilt"><h3>Стикеры & мерч</h3><p>Фирменные стикеры «Госпожа Алатея», арт-постеры и аксессуары.</p><span class="pill">скоро</span></div>
+          <div class="card tilt"><h3>Коллаборации</h3><p>Бренд-съёмки, fashion-сцены, интеграции с артистами и площадками.</p><span class="pill">отбор</span></div>
         </div>
-        <div style="margin-top:1rem">
-          <a href="#contact" class="btn primary">Обсудить проект</a>
-        </div>
+        <div style="margin-top:1rem"><a href="#contact" class="btn primary">Обсудить проект</a></div>
       </div>
     </section>
 
     <!-- GALLERY -->
     <section id="gallery">
-      <div class="container">
-        <h2>Галерея</h2>
+      <div class="container reveal">
+        <h2 class="neonTitle">Галерея<div class="tube" aria-hidden="true"></div></h2>
         <p class="sub">Стилизованные постановочные кадры. Для демонстрации стиля и эстетики образа.</p>
         <div class="grid three gallery" style="margin-top:1rem">
-          <img loading="lazy" src="https://images.unsplash.com/photo-1571835782480-0adb5a19cbf2?q=80&w=1200&auto=format&fit=crop" alt="Сценический образ в неоне">
-          <img loading="lazy" src="https://images.unsplash.com/photo-1565098772267-60af42b81ef2?q=80&w=1200&auto=format&fit=crop" alt="Кожа, металл, контраст света">
-          <img loading="lazy" src="https://images.unsplash.com/photo-1535930749574-1399327ce78f?q=80&w=1200&auto=format&fit=crop" alt="Глянцевые акценты и драм-свет">
-          <img loading="lazy" src="https://images.unsplash.com/photo-1543589077-47d81606c1bf?q=80&w=1200&auto=format&fit=crop" alt="Силуэт, тень и форма">
-          <img loading="lazy" src="https://images.unsplash.com/photo-1520970014086-2208d157c9e2?q=80&w=1200&auto=format&fit=crop" alt="Элементы дисциплины и контроля">
-          <img loading="lazy" src="https://images.unsplash.com/photo-1605723336690-5d5cf0f39ecc?q=80&w=1200&auto=format&fit=crop" alt="Минимализм и неоновые акценты">
+          <div class="wrap"><img loading="lazy" src="https://images.unsplash.com/photo-1571835782480-0adb5a19cbf2?q=80&w=1200&auto=format&fit=crop" alt="Сценический образ в неоне"></div>
+          <div class="wrap"><img loading="lazy" src="https://images.unsplash.com/photo-1565098772267-60af42b81ef2?q=80&w=1200&auto=format&fit=crop" alt="Кожа, металл, контраст света"></div>
+          <div class="wrap"><img loading="lazy" src="https://images.unsplash.com/photo-1535930749574-1399327ce78f?q=80&w=1200&auto=format&fit=crop" alt="Глянцевые акценты и драм-свет"></div>
+          <div class="wrap"><img loading="lazy" src="https://images.unsplash.com/photo-1543589077-47d81606c1bf?q=80&w=1200&auto=format&fit=crop" alt="Силуэт, тень и форма"></div>
+          <div class="wrap"><img loading="lazy" src="https://images.unsplash.com/photo-1520970014086-2208d157c9e2?q=80&w=1200&auto=format&fit=crop" alt="Элементы дисциплины и контроля"></div>
+          <div class="wrap"><img loading="lazy" src="https://images.unsplash.com/photo-1605723336690-5d5cf0f39ecc?q=80&w=1200&auto=format&fit=crop" alt="Минимализм и неоновые акценты"></div>
         </div>
       </div>
     </section>
 
     <!-- TESTIMONIALS -->
     <section id="testimonials">
-      <div class="container">
-        <h2>Отзывы</h2>
+      <div class="container reveal">
+        <h2 class="neonTitle">Отзывы<div class="tube" aria-hidden="true"></div></h2>
         <div class="grid two" style="margin-top:1rem">
           <div class="card quote">«Продуманная работа с границами и безопасностью. Сильный образ, идеальная дисциплина.» — <span class="nowrap">Клиент (M)</span></div>
           <div class="card quote">«Арт и контроль со вкусом. Ни грамма лишнего — только стиль и уважение.» — Организатор съёмки</div>
@@ -258,25 +320,13 @@
 
     <!-- FAQ -->
     <section id="faq">
-      <div class="container">
-        <h2>FAQ</h2>
+      <div class="container reveal">
+        <h2 class="neonTitle">FAQ<div class="tube" aria-hidden="true"></div></h2>
         <div class="grid two" style="margin-top:1rem">
-          <div class="card">
-            <h3>Это интим-услуги?</h3>
-            <p>Нет. Проект — арт, перформанс и образовательные форматы. Приватные встречи — это эстетика дисциплины и контроля без интим-услуг.</p>
-          </div>
-          <div class="card">
-            <h3>Возрастные ограничения?</h3>
-            <p>Строго 18+. Перед входом — подтверждение возраста. Документы — по запросу.</p>
-          </div>
-          <div class="card">
-            <h3>Как обсудить детали?</h3>
-            <p>Опишите задачу и желаемые рамки. Далее бриф, согласование, договор, чек-лист безопасности.</p>
-          </div>
-          <div class="card">
-            <h3>Где проходят встречи?</h3>
-            <p>Студии, частные площадки, мероприятия. Локации согласуются заранее; соблюдаем конфиденциальность.</p>
-          </div>
+          <div class="card"><h3>Это интим-услуги?</h3><p>Нет. Проект — арт, перформанс и образовательные форматы. Приватные встречи — эстетика дисциплины и контроля без интим-услуг.</p></div>
+          <div class="card"><h3>Возрастные ограничения?</h3><p>Строго 18+. Перед входом — подтверждение возраста. Документы — по запросу.</p></div>
+          <div class="card"><h3>Как обсудить детали?</h3><p>Опишите задачу и желаемые рамки. Далее бриф, согласование, договор, чек-лист безопасности.</p></div>
+          <div class="card"><h3>Где проходят встречи?</h3><p>Студии, частные площадки, мероприятия. Локации согласуются заранее; соблюдаем конфиденциальность.</p></div>
         </div>
       </div>
     </section>
@@ -284,33 +334,33 @@
     <!-- CONTACT -->
     <section id="contact">
       <div class="container grid two">
-        <div class="card">
-          <h2>Контакты</h2>
+        <div class="card reveal">
+          <h2 class="neonTitle">Контакты<div class="tube" aria-hidden="true"></div></h2>
           <p class="sub">Напишите, чтобы обсудить проект, бриф или коллаборацию.</p>
           <div class="list" style="margin-top:.8rem">
             <div style="display:flex;gap:.6rem;align-items:center">
-              <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M3 5h18M6 12h12M9 19h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              <a href="https://t.me/your_channel_here" target="_blank" rel="noopener">Telegram</a>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 5h18M6 12h12M9 19h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <a class="neon-link" href="https://t.me/your_channel_here" target="_blank" rel="noopener">Telegram</a>
             </div>
             <div style="display:flex;gap:.6rem;align-items:center">
-              <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M7 7h10v10H7z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
-              <a href="https://instagram.com/your_profile_here" target="_blank" rel="noopener">Instagram*</a>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 7h10v10H7z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
+              <a class="neon-link" href="https://instagram.com/your_profile_here" target="_blank" rel="noopener">Instagram*</a>
             </div>
             <div style="display:flex;gap:.6rem;align-items:center">
-              <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M4 4h16v16H4z" stroke="currentColor" stroke-width="1.5"/><path d="M6 10h12M6 14h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              <a href="https://vk.com/your_profile_here" target="_blank" rel="noopener">ВКонтакте</a>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4h16v16H4z" stroke="currentColor" stroke-width="1.5"/><path d="M6 10h12M6 14h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <a class="neon-link" href="https://vk.com/your_profile_here" target="_blank" rel="noopener">ВКонтакте</a>
             </div>
             <div style="display:flex;gap:.6rem;align-items:center">
-              <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M4 4l8 6 8-6v16H4V4z" stroke="currentColor" stroke-width="1.5"/></svg>
-              <a href="mailto:hello@alateya.example">hello@alateya.example</a>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4l8 6 8-6v16H4V4z" stroke="currentColor" stroke-width="1.5"/></svg>
+              <a class="neon-link" href="mailto:hello@alateya.example">hello@alateya.example</a>
             </div>
           </div>
         </div>
-        <div class="card">
+        <div class="card reveal">
           <form onsubmit="return sendForm(event)" aria-label="Форма связи">
-            <label>Имя<br><input required name="name" placeholder="Ваше имя" style="width:100%;padding:.8rem;border-radius:12px;border:1px solid #ffffff2a;background:#0d0d14;color:var(--text)"></label><br><br>
-            <label>Email<br><input required type="email" name="email" placeholder="you@example.com" style="width:100%;padding:.8rem;border-radius:12px;border:1px solid #ffffff2a;background:#0d0d14;color:var(--text)"></label><br><br>
-            <label>Сообщение<br><textarea required name="message" rows="4" placeholder="Кратко опишите задачу/формат, рамки и сроки" style="width:100%;padding:.8rem;border-radius:12px;border:1px solid #ffffff2a;background:#0d0d14;color:var(--text)"></textarea></label><br><br>
+            <label>Имя<br><input required name="name" placeholder="Ваше имя" style="width:100%;padding:.9rem;border-radius:12px;border:1px solid #ffffff2a;background:#0f1020;color:var(--text)"></label><br><br>
+            <label>Email<br><input required type="email" name="email" placeholder="you@example.com" style="width:100%;padding:.9rem;border-radius:12px;border:1px solid #ffffff2a;background:#0f1020;color:var(--text)"></label><br><br>
+            <label>Сообщение<br><textarea required name="message" rows="4" placeholder="Кратко опишите задачу/формат, рамки и сроки" style="width:100%;padding:.9rem;border-radius:12px;border:1px solid #ffffff2a;background:#0f1020;color:var(--text)"></textarea></label><br><br>
             <label style="display:flex;gap:.5rem;align-items:center">
               <input type="checkbox" id="isAdult" required>
               <span>Мне 18 лет и я согласен(на) с правилами взаимодействия</span>
@@ -328,15 +378,9 @@
     <div class="container foot">
       <div>© <span id="y"></span> ALATEYA • Все права защищены</div>
       <div class="social" aria-label="Соцсети">
-        <a href="https://t.me/your_channel_here" aria-label="Telegram">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 4L10 12l4 6 2-5 5-9z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="https://instagram.com/your_profile_here" aria-label="Instagram">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
-        </a>
-        <a href="https://vk.com/your_profile_here" aria-label="VK">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 7h3l2 4 2-4h3l-3 5 3 5h-3l-2-4-2 4H5l3-5-3-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-        </a>
+        <a href="https://t.me/your_channel_here" aria-label="Telegram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 4L10 12l4 6 2-5 5-9z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></a>
+        <a href="https://instagram.com/your_profile_here" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.5"/></svg></a>
+        <a href="https://vk.com/your_profile_here" aria-label="VK"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 7h3l2 4 2-4h3l-3 5 3 5h-3l-2-4-2 4H5l3-5-3-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></a>
       </div>
     </div>
   </footer>
@@ -358,12 +402,12 @@
     });
     showGate();
 
-    // Pseudo mobile menu (kept minimal for Zero-Block usage)
+    // Mobile menu (minimal for embed blocks)
     document.getElementById('openNav')?.addEventListener('click', ()=>{
       alert('Навигация: О проекте • Манифест • Услуги • Галерея • FAQ • Контакты');
     });
 
-    // Simple form handler: opens email client, shows local OK
+    // Simple form handler: mailto
     function sendForm(e){
       e.preventDefault();
       const f=e.target, name=f.name.value.trim(), email=f.email.value.trim(), msg=f.message.value.trim();
@@ -375,6 +419,34 @@
       document.getElementById('formNote').textContent = 'Готово! Письмо откроется в вашем почтовом клиенте. Если не открылось — напишите в Telegram.';
       return false;
     }
+
+    // Scroll reveal
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } });
+    },{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // Parallax tilt for cards
+    const tiltCards = document.querySelectorAll('.tilt');
+    tiltCards.forEach(card=>{
+      let rect; const damp=18;
+      function onMove(ev){
+        rect = rect || card.getBoundingClientRect();
+        const x = (ev.clientX - rect.left)/rect.width - .5;
+        const y = (ev.clientY - rect.top)/rect.height - .5;
+        card.style.transform = `rotateX(${(-y*damp)}deg) rotateY(${(x*damp)}deg) translateY(-4px)`;
+      }
+      function onLeave(){ card.style.transform=''; rect=null; }
+      card.addEventListener('mousemove', onMove);
+      card.addEventListener('mouseleave', onLeave);
+    });
+
+    // Cursor blob follows pointer
+    const blob = document.getElementById('blob');
+    let bx = window.innerWidth/2, by = window.innerHeight/2, tx = bx, ty = by;
+    function raf(){ bx += (tx - bx)*0.12; by += (ty - by)*0.12; blob.style.left = bx+'px'; blob.style.top = by+'px'; requestAnimationFrame(raf); }
+    window.addEventListener('pointermove', e=>{ tx=e.clientX; ty=e.clientY; });
+    raf();
   </script>
 
   <!-- Small legal note -->
